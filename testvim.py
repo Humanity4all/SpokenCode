@@ -1,8 +1,9 @@
 """Test vim grammar."""
 
 import arpeggio
+from nose.tools import assert_raises
+
 from SpokenCode import vim
-from nose.tools import assert_equals
 
 
 def test_saving():
@@ -18,10 +19,5 @@ def test_saving():
         "Save buffer",
         "Save all. And some other junk."]
     for test_case in test_cases:
-        try:
+        with assert_raises(arpeggio.NoMatch): 
             vim.parse(test_case)
-        except arpeggio.NoMatch:
-            assert True
-        else:
-            print("Incorrectly passed testcase: {}".format(test_case))
-            assert False
