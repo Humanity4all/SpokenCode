@@ -1,3 +1,4 @@
+# pylint: disable=missing-docstring,no-self-use
 import arpeggio
 from nose.tools import assert_raises
 
@@ -10,7 +11,7 @@ def parse(instruction, rule):
     parse_tree = parser.parse(instruction)
 
 
-class Test_single_quoted_string(object):
+class TestSingleQuotedString(object):
 
     def test_empty_string(self):
         parse("''", common.single_quoted_string)
@@ -37,7 +38,7 @@ class Test_single_quoted_string(object):
                 parse(string, common.single_quoted_string)
 
 
-class Test_double_quoted_string(object):
+class TestDoubleQuotedString(object):
 
     def test_empty_string(self):
         parse('""', common.double_quoted_string)
@@ -62,3 +63,28 @@ class Test_double_quoted_string(object):
                 r'"Escaped final quote\"']:
             with assert_raises(arpeggio.NoMatch):
                 parse(string, common.double_quoted_string)
+
+
+class TestNumbers():
+
+
+    def test_number_element(self):
+        test_cases = [
+            "one",
+            "fourteen",
+            "four",
+            "hundred",
+            "5"]
+        for test_case in test_cases:
+            parse(test_case, common.number_element)
+
+
+    def test_integer(self):
+        test_cases = [
+            "-one",
+            "minus twohundred",
+            "two-thousand and five",
+            "fourteen hundred",
+            "386"]
+        for test_case in test_cases:
+            parse(test_case, common.number)

@@ -35,3 +35,50 @@ def double_quoted_string():
         '"',
         arpeggio.EOF
     )
+
+
+def number():
+    """Number literal."""
+    return (
+        arpeggio.Optional(["minus", "-"]),
+        number_element,
+        arpeggio.ZeroOrMore(arpeggio.Optional(["and", "-"]), number_element))
+
+
+def number_element():
+    """Any word that can be part of a number."""
+    return [
+        "ten",
+        "eleven",
+        "twelve",
+        "thirteen",
+        "fourteen",
+        "fifteen",
+        "sixteen",
+        "seventeen",
+        "eighteen",
+        "nineteen",
+        "twenty",
+        "thirthy",
+        "forty",
+        "fifty",
+        "sixty",
+        "seventy",
+        "eighty",
+        "ninety",
+        "hundred",
+        "thousand",
+        "million",
+        "billion",
+        "trillion",
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        _("[0-9]")]
