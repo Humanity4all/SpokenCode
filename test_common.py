@@ -79,7 +79,7 @@ class TestNumbers():
             parse(test_case, common.number_element)
 
 
-    def test_integer(self):
+    def test_signed_integer(self):
         test_cases = [
             "-one",
             "minus twohundred",
@@ -87,4 +87,13 @@ class TestNumbers():
             "fourteen hundred",
             "386"]
         for test_case in test_cases:
-            parse(test_case, common.number)
+            parse(test_case, common.signed_integer)
+
+
+    def test_unsigned_integer(self):
+        test_cases = [
+            "twentyfive",
+            "427",
+            "nineteen"]
+        for test_case in test_cases:
+            parse(test_case, common.unsigned_integer)

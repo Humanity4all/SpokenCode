@@ -37,12 +37,36 @@ def double_quoted_string():
     )
 
 
-def number():
-    """Number literal."""
+def unsigned_integer():
+    """Unsigned integer."""
     return (
-        arpeggio.Optional(["minus", "-"]),
         number_element,
         arpeggio.ZeroOrMore(arpeggio.Optional(["and", "-"]), number_element))
+
+
+def signed_integer():
+    """Signed Integer."""
+    return (
+        arpeggio.Optional(["minus", "-"]),
+        unsigned_integer)
+
+
+def unsigned_float():
+    """Unsigned float."""
+    return (
+        unsigned_integer,
+        arpeggio.Optional(
+            [",", "comma", ".", "period", "dot", "point"],
+            unsigned_integer))
+
+
+def signed_float():
+    """Signed float."""
+    return (
+        signed_integer,
+        arpeggio.Optional(
+            [",", "comma", ".", "period", "dot", "point"],
+            unsigned_integer))
 
 
 def number_element():
