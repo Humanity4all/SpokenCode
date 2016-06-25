@@ -5,7 +5,7 @@ import arpeggio
 
 def vim_command():
     """Any valid vim command."""
-    return [save_buffer, save_all], arpeggio.EOF
+    return [save_buffer, save_all]
 
 
 def save_buffer():

@@ -16,8 +16,7 @@ def test_saving():
 
     test_cases = [
         "Invalid syntax.",
-        "Save buffer",
-        "Save all. And some other junk."]
+        "Save buffer"]
     for test_case in test_cases:
-        with assert_raises(arpeggio.NoMatch): 
+        with assert_raises(arpeggio.NoMatch):
             vim.parse(test_case)
