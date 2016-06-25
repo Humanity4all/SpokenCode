@@ -7,7 +7,8 @@ from SpokenCode import common
 
 def parse(instruction, rule):
     """Parse vim instruction."""
-    parser = arpeggio.ParserPython(rule, ignore_case=True)
+    new_rule = (rule, arpeggio.EOF)
+    parser = arpeggio.ParserPython(new_rule, ignore_case=True)
     parse_tree = parser.parse(instruction)
 
 
@@ -36,6 +37,7 @@ class TestSingleQuotedString(object):
                 r"'Escaped final quote\'"]:
             with assert_raises(arpeggio.NoMatch):
                 parse(string, common.single_quoted_string)
+                print(string)
 
 
 class TestDoubleQuotedString(object):
@@ -78,7 +80,6 @@ class TestNumbers():
         for test_case in test_cases:
             parse(test_case, common.number_element)
 
-
     def test_signed_integer(self):
         test_cases = [
             "-one",
@@ -88,7 +89,6 @@ class TestNumbers():
             "386"]
         for test_case in test_cases:
             parse(test_case, common.signed_integer)
-
 
     def test_unsigned_integer(self):
         test_cases = [

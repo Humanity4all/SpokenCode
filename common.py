@@ -19,7 +19,6 @@ def single_quoted_string():
             _("[^']")
         ]),
         "'",
-        arpeggio.EOF
     )
 
 
@@ -33,7 +32,6 @@ def double_quoted_string():
             _('[^"]')
         ]),
         '"',
-        arpeggio.EOF
     )
 
 
