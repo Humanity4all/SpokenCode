@@ -9,7 +9,7 @@ def parse(instruction, rule):
     """Parse vim instruction."""
     new_rule = (rule, arpeggio.EOF)
     parser = arpeggio.ParserPython(new_rule, ignore_case=True)
-    parse_tree = parser.parse(instruction)
+    parser.parse(instruction)
 
 
 class TestSingleQuotedString(object):
@@ -80,6 +80,10 @@ class TestNumbers():
         for test_case in test_cases:
             parse(test_case, common.number_element)
 
+    def test_invalid_number_element(self):
+        with assert_raises(arpeggio.NoMatch):
+            parse("random", common.number_element)
+
     def test_signed_integer(self):
         test_cases = [
             "-one",
@@ -90,6 +94,15 @@ class TestNumbers():
         for test_case in test_cases:
             parse(test_case, common.signed_integer)
 
+    def test_invalid_signed_integer(self):
+        for test_case in [
+                "eleventyone",
+                "and four",
+                "14.5",
+                "random"]:
+            with assert_raises(arpeggio.NoMatch):
+                parse(test_case, common.signed_integer)
+
     def test_unsigned_integer(self):
         test_cases = [
             "twentyfive",
@@ -97,3 +110,56 @@ class TestNumbers():
             "nineteen"]
         for test_case in test_cases:
             parse(test_case, common.unsigned_integer)
+
+    def test_invalid_unsigned_integer(self):
+        for test_case in [
+                "-five",
+                "eleventyone",
+                "and four",
+                "14.5",
+                "random"]:
+            with assert_raises(arpeggio.NoMatch):
+                parse(test_case, common.unsigned_integer)
+
+    def test_signed_float(self):
+        test_cases = [
+            "-one",
+            "minus twohundred",
+            "two-thousand and five",
+            "fourteen hundred",
+            "twentyfive.6",
+            "fourtyfive comma nine",
+            "sixty-seven point threehundredseven4",
+            "386"]
+        for test_case in test_cases:
+            parse(test_case, common.signed_float)
+
+    def test_invalid_signed_float(self):
+        for test_case in [
+                "eleventyone",
+                "and four",
+                "14.7.8",
+                "random"]:
+            with assert_raises(arpeggio.NoMatch):
+                parse(test_case, common.signed_float)
+
+    def test_unsigned_float(self):
+        test_cases = [
+            "twentyfive",
+            "427",
+            "3.14",
+            "forty two comma zero",
+            "nineteen"]
+        for test_case in test_cases:
+            parse(test_case, common.unsigned_float)
+
+    def test_invalid_unsigned_float(self):
+        for test_case in [
+                "-five",
+                "eleventyone",
+                "and four",
+                "1,235.584",
+                "1,548,536.20",
+                "random"]:
+            with assert_raises(arpeggio.NoMatch):
+                parse(test_case, common.unsigned_float)
