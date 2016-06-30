@@ -83,6 +83,7 @@ def number_element():
         "twenty",
         "thirthy",
         "forty",
+        "fourty",
         "fifty",
         "sixty",
         "seventy",
