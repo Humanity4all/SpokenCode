@@ -8,7 +8,7 @@ class CommonInterpreter(PTNodeVisitor):
 
     def visit_number_element(self, node, _):
         """Interpret number element."""
-        if node.value.isdigit():
+        if str(node.value).isdigit():
             return int(node.value)
         number_translations = [
             ("zero", 0),
@@ -48,3 +48,4 @@ class CommonInterpreter(PTNodeVisitor):
         for element in number_translations:
             if node.value == element[0]:
                 return element[1]
+        raise ValueError("Not a valid number element: {}".format(node.value))
