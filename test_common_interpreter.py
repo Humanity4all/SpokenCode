@@ -6,6 +6,11 @@ class MockNode():
     def __init__(self, value):
         self.value = value
 
+def make_list_of_mock_nodes(plain_list):
+    node_list = []
+    for item in plain_list:
+        node_list.append(MockNode(item))
+    return node_list
 
 class TestNumbers():
     def test_valid_number_elements(self):
@@ -34,3 +39,17 @@ class TestNumbers():
             with assert_raises(ValueError):
                 interpreter.visit_number_element(MockNode(test_case), None)
                 print(test_case)
+
+    def test_unsigned_integer(self):
+        test_cases = [
+            ([1, 100], 100),
+            ([14], 14),
+            ([1, 2, 3, 4], 1234),
+            ([19, 1000, 4, 100, 20, 3], 19423)]
+        interpreter = CommonInterpreter()
+        for test_case in test_cases:
+            assert_equals(
+                interpreter.visit_unsigned_integer(
+                    None,
+                    test_case[0]),
+                test_case[1])

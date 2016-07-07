@@ -49,3 +49,20 @@ class CommonInterpreter(PTNodeVisitor):
             if node.value == element[0]:
                 return element[1]
         raise ValueError("Not a valid number element: {}".format(node.value))
+
+    def visit_unsigned_integer(self, _, children):
+        """Interpret unsigned integer."""
+        if all(item < 10 for item in children):
+            return int("".join(str(item) for item in children))
+        stack = []
+        for child in children:
+            if len(stack) == 0:
+                stack = [child] + stack
+            elif stack[0] > child:
+                stack = [child] + stack
+            elif stack[0] < child:
+                stack[0] *= child
+        acc = 0
+        for item in stack:
+            acc += item
+        return acc
