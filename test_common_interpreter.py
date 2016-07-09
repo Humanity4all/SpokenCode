@@ -50,8 +50,7 @@ class TestNumbers():
             ([100, 90, 8, 1000], 198000),
             ([200, 90, 8, 1000], 298000),
             ([1, 100, 90, 8, 1000], 198000),
-            ([1e6, 400, 1000], 1400000)
-            ]
+            ([1e6, 400, 1000], 1400000)]
         interpreter = CommonInterpreter()
         for test_case in test_cases:
             assert_equals(
