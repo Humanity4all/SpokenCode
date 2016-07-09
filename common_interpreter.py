@@ -112,3 +112,20 @@ class CommonInterpreter(PTNodeVisitor):
                 stack.append(child)
         result = sum(stack)
         return result
+
+    def visit_minus_sign(self, _n, _c):
+        """Turn 'minus' or '-' into '-'."""
+        return '-'
+
+    def visit_decimal_mark(self, _n, _c):
+        """Turn variants of '.' into '.'."""
+        return '.'
+
+    def visit_signed_integer(self, _n, children):
+        return int(''.join(str(child) for child in children))
+
+    def visit_unsigned_float(self, _n, children):
+        return float(''.join(str(child) for child in children))
+
+    def visit_signed_float(self, _n, children):
+        return float(''.join(str(child) for child in children))

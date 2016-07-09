@@ -58,3 +58,15 @@ class TestNumbers():
                     None,
                     test_case[0]),
                 test_case[1])
+
+    def test_signed_integer(self):
+        test_cases = [
+            (['-', 100], -100),
+            ([100], 100)]  # case without minus
+        interpreter = CommonInterpreter()
+        for test_case in test_cases:
+            assert_equals(
+                interpreter.visit_signed_integer(
+                    None,
+                    test_case[0]),
+                test_case[1])
