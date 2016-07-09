@@ -51,18 +51,64 @@ class CommonInterpreter(PTNodeVisitor):
         raise ValueError("Not a valid number element: {}".format(node.value))
 
     def visit_unsigned_integer(self, _, children):
-        """Interpret unsigned integer."""
+        """Interpret unsigned integer.
+
+        """
         if all(item < 10 for item in children):
             return int("".join(str(item) for item in children))
+
+        MULTIPLIERS = [1e2, 1e3, 1e6, 1e9, 1e12]
         stack = []
+        # English numbers are built up like this:
+        # ..., how many million, how many thousand, how many hundred, how many ones.
+        # The 'how many' part can itself be built up like a number, but will
+        # never be bigger than its multiplier. Here are two examples:
+        #
+        #  Example one: 19 100 4 100 20 3 -> 19423
+        #  19   -> [19]
+        #
+        #  1000 -> [19] + 1000 -> [19000]
+        #          # because 1000 is a multiplier
+        #
+        #  4    -> [19000] + 4 -> [19000, 4]
+        #          # Let's not commit, see what follows.
+        #
+        #  100  -> [19000, 4] + 100 -> [19000, 400]
+        #          # because 100 is a multiplier
+        #
+        #  20   -> [19000, 400] + 20 -> [19000, 400, 20]
+        #          # let's not commit
+        #
+        #  3    -> [19000, 400, 20] + 3 -> [19000, 400, 20, 3]
+        #          # let's not commit
+        #
+        #  []   -> [19000, 400, 20, 3] + [] -> 19423
+        #          # At the end of the list, just sum it all
+        #
+        # ============================
+        #
+        #  Example two: 100 90 100 -> 19000.
+        #   100 -> [100]
+        #
+        #    90 -> [100] + 90 -> [100, 90]
+        #          # let's not commit
+        #
+        #  1000 -> [100, 90] + 1000 -> [19000]
+        #          # because 1000 is a multiplier, so sum the stack and multiply
+        #
+        #    [] -> [19000]          -> 19000
+        #          # at the end of the list, just sum it all
+
         for child in children:
             if len(stack) == 0:
-                stack = [child] + stack
-            elif stack[0] > child:
-                stack = [child] + stack
-            elif stack[0] < child:
-                stack[0] *= child
-        acc = 0
-        for item in stack:
-            acc += item
-        return acc
+                stack = [child]
+            elif child in MULTIPLIERS:
+                # child is a multiplier. Use everything smaller than the
+                # multiplier for the multiplier
+                bigger_items = [item for item in stack if child < item]
+                rest = [item for item in stack if item < child]
+                stack = bigger_items + [sum(rest) * child]
+            else:
+                stack.append(child)
+        result = sum(stack)
+        return result
