@@ -42,29 +42,35 @@ def unsigned_integer():
         arpeggio.ZeroOrMore(arpeggio.Optional(["and", "-"]), number_element))
 
 
+def minus_sign():
+    """Minus sign."""
+    return ["minus", "-"]
+
+
 def signed_integer():
     """Signed Integer."""
     return (
-        arpeggio.Optional(["minus", "-"]),
+        arpeggio.Optional(minus_sign),
         unsigned_integer)
+
+
+def decimal_mark():
+    """Decimal mark."""
+    return [".", "period", "dot", "point"]
 
 
 def unsigned_float():
     """Unsigned float."""
     return (
         unsigned_integer,
-        arpeggio.Optional(
-            [",", "comma", ".", "period", "dot", "point"],
-            unsigned_integer))
+        arpeggio.Optional(decimal_mark, unsigned_integer))
 
 
 def signed_float():
     """Signed float."""
     return (
         signed_integer,
-        arpeggio.Optional(
-            [",", "comma", ".", "period", "dot", "point"],
-            unsigned_integer))
+        arpeggio.Optional(decimal_mark, unsigned_integer))
 
 
 def number_element():

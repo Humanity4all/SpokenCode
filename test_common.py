@@ -128,7 +128,7 @@ class TestNumbers():
             "two-thousand and five",
             "fourteen hundred",
             "twentyfive.6",
-            "fourtyfive comma nine",
+            "fourtyfive dot nine",
             "sixty-seven point threehundredseven4",
             "386"]
         for test_case in test_cases:
@@ -148,7 +148,7 @@ class TestNumbers():
             "twentyfive",
             "427",
             "3.14",
-            "forty two comma zero",
+            "forty two point zero",
             "nineteen"]
         for test_case in test_cases:
             parse(test_case, common.unsigned_float)
