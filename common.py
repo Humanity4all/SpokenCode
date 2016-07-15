@@ -49,9 +49,7 @@ def minus_sign():
 
 def signed_integer():
     """Signed Integer."""
-    return (
-        arpeggio.Optional(minus_sign),
-        unsigned_integer)
+    return (arpeggio.Optional(minus_sign), unsigned_integer)
 
 
 def decimal_mark():
@@ -61,17 +59,15 @@ def decimal_mark():
 
 def unsigned_float():
     """Unsigned float."""
-    return (
-        unsigned_integer,
-        arpeggio.Optional(decimal_mark, unsigned_integer))
+    return [
+        (unsigned_integer, decimal_mark, unsigned_integer),
+        (unsigned_integer, decimal_mark),
+        (decimal_mark, unsigned_integer)]
 
 
 def signed_float():
     """Signed float."""
-    return (
-        signed_integer,
-        arpeggio.Optional(decimal_mark, unsigned_integer))
-
+    return (arpeggio.Optional(minus_sign), unsigned_float)
 
 def number_element():
     """Any word that can be part of a number."""

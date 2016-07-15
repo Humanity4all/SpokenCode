@@ -7,7 +7,8 @@ from SpokenCode import common
 
 def parse(instruction, rule):
     """Parse vim instruction."""
-    new_rule = (rule, arpeggio.EOF)
+    def new_rule():
+        return (rule, arpeggio.EOF)
     parser = arpeggio.ParserPython(new_rule, ignore_case=True)
     parser.parse(instruction)
 
@@ -123,14 +124,14 @@ class TestNumbers():
 
     def test_signed_float(self):
         test_cases = [
-            "-one",
-            "minus twohundred",
-            "two-thousand and five",
-            "fourteen hundred",
+            "-one dot zero",
+            "minus twohundred point",
+            "dot two-thousand and five",
+            "fourteen hundred point two",
             "twentyfive.6",
             "fourtyfive dot nine",
             "sixty-seven point threehundredseven4",
-            "386"]
+            "386."]
         for test_case in test_cases:
             parse(test_case, common.signed_float)
 
@@ -145,11 +146,11 @@ class TestNumbers():
 
     def test_unsigned_float(self):
         test_cases = [
-            "twentyfive",
-            "427",
+            "twentyfive.",
+            "427.",
             "3.14",
             "forty two point zero",
-            "nineteen"]
+            "point nineteen"]
         for test_case in test_cases:
             parse(test_case, common.unsigned_float)
 
