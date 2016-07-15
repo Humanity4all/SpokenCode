@@ -64,7 +64,7 @@ class CommonInterpreter(PTNodeVisitor):
         # The 'how many' part can itself be built up like a number, but will
         # never be bigger than its multiplier. Here are two examples:
         #
-        #  Example one: 19 100 4 100 20 3 -> 19423
+        #  Example one: 19 1000 4 100 20 3 -> 19423
         #  19   -> [19]
         #
         #  1000 -> [19] + 1000 -> [19000]
