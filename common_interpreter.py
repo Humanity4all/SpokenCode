@@ -113,6 +113,9 @@ class CommonInterpreter(PTNodeVisitor):
         result = sum(stack)
         return result
 
+    def visit_couple_word(self, _n, _c):
+        return None
+
     def visit_minus_sign(self, _n, _c):
         """Turn 'minus' or '-' into '-'."""
         return '-'

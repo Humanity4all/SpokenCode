@@ -34,12 +34,14 @@ def double_quoted_string():
         '"',
     )
 
+def couple_word():
+    return ["and", "-"]
 
 def unsigned_integer():
     """Unsigned integer."""
     return (
         number_element,
-        arpeggio.ZeroOrMore(arpeggio.Optional(["and", "-"]), number_element))
+        arpeggio.ZeroOrMore(arpeggio.Optional(couple_word), number_element))
 
 
 def minus_sign():
